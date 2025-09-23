@@ -19,7 +19,7 @@ spec:
         - containerPort: 8080
         volumeMounts:
         - name: storage
-          mountPath: /mnt/storage   # 👈 matches UPLOAD_DIR in app.py
+          mountPath: /mnt/storage
       volumes:
       - name: storage
         persistentVolumeClaim:
