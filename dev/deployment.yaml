@@ -17,3 +17,10 @@ spec:
         image: ghcr.io/jameskicklighter/hello-world-app:1.0
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: storage
+          mountPath: /mnt/storage   # 👈 matches UPLOAD_DIR in app.py
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: hello-world-pvc
