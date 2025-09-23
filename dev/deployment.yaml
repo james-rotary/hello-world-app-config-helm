@@ -15,7 +15,6 @@ spec:
       containers:
       - name: hello-world-app
         image: hello-world-app:dev-remote
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         volumeMounts:
