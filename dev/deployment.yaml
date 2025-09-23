@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
+  name: hello-world-app
 spec:
   selector:
     matchLabels:
-      app: hello-world
+      app: hello-world-app
   replicas: 2
   template:
     metadata:
       labels:
-        app: hello-world
+        app: hello-world-app
     spec:
       containers:
-      - name: hello-world
-        image: ghcr.io/jameskicklighter/hello-world-app:1.0
+      - name: hello-world-app
+        image: hello-world-app:dev
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         volumeMounts:
