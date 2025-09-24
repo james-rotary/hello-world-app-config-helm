@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/james-rotary/hello-world-app-config.git
+    repoURL: https://github.com/james-rotary/hello-world-app-config-helm.git
     targetRevision: main
     path: charts/hello-world-app
     helm:
@@ -16,7 +16,7 @@ spec:
         - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: myapp
+    namespace: demo-hello-world-helm
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
