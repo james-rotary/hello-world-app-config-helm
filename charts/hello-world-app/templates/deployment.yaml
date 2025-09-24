@@ -25,9 +25,5 @@ spec:
               mountPath: /mnt/storage
       volumes:
         - name: storage
-          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.claimName }}
-          {{- else }}
-          emptyDir: {}
-          {{- end }}
