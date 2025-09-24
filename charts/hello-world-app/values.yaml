@@ -1,0 +1,37 @@
+# --- Deployment ---
+replicaCount: 2
+
+image:
+  # For minikube local testing, this should match the image you build and load manually, not from Docker repo:
+  #   docker build -t hello-world-app:dev-remote ...
+  #   minikube image load hello-world-app:dev-remote
+  repository: hello-world-app
+  tag: dev-remote
+  pullPolicy: IfNotPresent
+
+containerPort: 8080
+
+# --- Service ---
+service:
+  type: ClusterIP
+  port: 8080         # Service port inside the cluster
+  targetPort: 8080   # Container's listening port (Flask app.run(..., port=8080))
+
+# --- Persistence (PVC) ---
+persistence:
+  claimName: hello-world-pvc
+  size: 1Gi
+  storageClass: standard      # minikube typically uses 'standard' (run `kubectl get sc`)
+  accessMode: ReadWriteOnce
+
+# resources:
+#   requests:
+#     cpu: 50m
+#     memory: 128Mi
+#   limits:
+#     cpu: 250m
+#     memory: 256Mi
+
+# env:
+#   - name: SOME_FLAG
+#     value: "true"
