@@ -1,0 +1,6 @@
+apiVersion: v2            # Helm 3 charts use v2
+name: hello-world-app     # chart (package) name
+description: A simple Flask "hello world" app with PVC-backed storage
+type: application
+version: 0.1.0            # chart version (SemVer) – bump on any chart/template/values change
+appVersion: "0.1.0"       # app version (informational) – can be your app release or a git SHA
