@@ -3,21 +3,23 @@ kind: Application
 metadata:
   name: hello-world-app
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-
   source:
     repoURL: https://github.com/james-rotary/hello-world-app-config.git
-    targetRevision: HEAD
-    path: dev
-  destination: 
+    targetRevision: main
+    path: charts/hello-world-app
+    helm:
+      valueFiles:
+        - values-dev.yaml
+  destination:
     server: https://kubernetes.default.svc
     namespace: myapp
-
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
-
+      - CreateNamespace=true
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
