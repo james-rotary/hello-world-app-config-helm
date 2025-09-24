@@ -1,27 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-app
+  name: {{ include "hello-world-app.fullname" . }}
+  labels:
+    {{- include "hello-world-app.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: hello-world-app
-  replicas: 2
+      {{- include "hello-world-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: hello-world-app
+        {{- include "hello-world-app.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: hello-world-app
-        image: hello-world-app:dev-remote
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: storage
-          mountPath: /mnt/storage
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          volumeMounts:
+            - name: storage
+              mountPath: /mnt/storage
       volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: hello-world-pvc
+        - name: storage
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
