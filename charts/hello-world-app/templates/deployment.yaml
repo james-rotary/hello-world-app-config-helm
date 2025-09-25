@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "hello-world-app.fullname" . }}
+  name: hello-world-app
   labels:
-    {{- include "hello-world-app.labels" . | nindent 4 }}
+    app.kubernetes.io/name: hello-world-app
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "hello-world-app.selectorLabels" . | nindent 6 }}
+      app: hello-world-app
   template:
     metadata:
       labels:
-        {{- include "hello-world-app.selectorLabels" . | nindent 8 }}
+        app: hello-world-app
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: hello-world-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
